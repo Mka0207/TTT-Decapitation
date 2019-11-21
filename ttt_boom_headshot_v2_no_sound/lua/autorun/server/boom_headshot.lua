@@ -37,18 +37,17 @@ local function gibPlayerHead( Ply, Normal )
 		ED:SetScale( Ply.server_ragdoll:EntIndex() )
 		ED:SetOrigin( Pos )
 	util.Effect( 'headshot', ED )
-	
 end
 
 -- Player Headshots
 local function PlayerDeath( Ply, Inflictor, Attacker )
-
     if !IsValid( Ply.server_ragdoll ) then return end
-
 	if !Ply.was_headshot then return end
-	
 	if !IsValid(Attacker) || !Attacker:IsPlayer() then return end
 	if !IsValid(Attacker:GetActiveWeapon()) then return end
+	if Ply.OwnedBlackMarketItems then
+		if Ply.OwnedBlackMarketItems[CAT_EQUIPMENT] == "fiber_helmet" then return end
+	end
 	
 	local Normal = Attacker:GetForward()
 	gibPlayerHead(Ply, Normal)
@@ -64,9 +63,5 @@ hook.Add( "PlayerSpawn", "HeadshotDecap.ResetDeathGroup", function( ply )
 end )
 
 hook.Add( "DoPlayerDeath", "HeadshotDecap.GetHeadShot", function( ply, attacker, dmg_info )
-	if ply.DeathGroup and ply.DeathGroup == HITGROUP_HEAD then
-
-	end;
-	
 	ply.DeathGroup = nil
 end )
