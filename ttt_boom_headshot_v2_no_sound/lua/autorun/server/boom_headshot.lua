@@ -45,6 +45,8 @@ local function PlayerDeath( Ply, Inflictor, Attacker )
 	if !Ply.was_headshot then return end
 	if !IsValid(Attacker) || !Attacker:IsPlayer() then return end
 	if !IsValid(Attacker:GetActiveWeapon()) then return end
+	if Ply.IsGhost and Ply:IsGhost() then return end
+	
 	if Ply.OwnedBlackMarketItems then
 		if Ply.OwnedBlackMarketItems[CAT_EQUIPMENT] == "fiber_helmet" then return end
 	end
