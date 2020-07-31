@@ -10,7 +10,7 @@ function EFFECT:Init(data)
 
 	local emitter = ParticleEmitter(pos)
 	for i=1, 12 do
-		local particle = emitter:Add("sprite_bloodspray"..math.random(8), pos)
+		local particle = emitter:Add("fwkzt/sprite_bloodspray"..math.random(8), pos)
 		particle:SetVelocity(norm * 32 + VectorRand() * 16)
 		particle:SetDieTime(math.Rand(1.5, 2.5))
 		particle:SetStartAlpha(200)
@@ -22,7 +22,7 @@ function EFFECT:Init(data)
 		particle:SetColor(255, 0, 0)
 		particle:SetLighting(true)
 	end
-	local particle = emitter:Add("sprite_bloodspray"..math.random(8), pos)
+	local particle = emitter:Add("fwkzt/sprite_bloodspray"..math.random(8), pos)
 	particle:SetVelocity(norm * 32)
 	particle:SetDieTime(math.Rand(2.25, 3))
 	particle:SetStartAlpha(200)
