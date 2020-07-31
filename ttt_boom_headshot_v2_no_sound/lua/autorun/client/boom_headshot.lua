@@ -7,4 +7,7 @@ function CreateSpriteMaterials()
 	end
 end
 
-CreateSpriteMaterials()
+hook.Add("Initialize","CreateBlood.TTT", function()
+	print("ran!")
+	CreateSpriteMaterials()
+end)

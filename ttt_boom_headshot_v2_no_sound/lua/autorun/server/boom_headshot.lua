@@ -2,6 +2,14 @@ if SERVER then
 	AddCSLuaFile( 'effects/headshot.lua' )
 	AddCSLuaFile( 'effects/bloodstream.lua' )
 	AddCSLuaFile( 'autorun/client/boom_headshot.lua' )
+	resource.AddFile( 'materials/fwkzt/sprite_bloodspray1.vmt' )
+	resource.AddFile( 'materials/fwkzt/sprite_bloodspray2.vmt' )
+	resource.AddFile( 'materials/fwkzt/sprite_bloodspray3.vmt' )
+	resource.AddFile( 'materials/fwkzt/sprite_bloodspray4.vmt' )
+	resource.AddFile( 'materials/fwkzt/sprite_bloodspray5.vmt' )
+	resource.AddFile( 'materials/fwkzt/sprite_bloodspray6.vmt' )
+	resource.AddFile( 'materials/fwkzt/sprite_bloodspray7.vmt' )
+	resource.AddFile( 'materials/fwkzt/sprite_bloodspray8.vmt' )
 end
 
 local function NoTTTGib( Ply )
