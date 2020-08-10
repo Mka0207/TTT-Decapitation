@@ -1,0 +1,1 @@
+player_manager.AddValidModel( "FWKZT Arctic", "models/player/t_arctic_fwkzt_test.mdl" )
