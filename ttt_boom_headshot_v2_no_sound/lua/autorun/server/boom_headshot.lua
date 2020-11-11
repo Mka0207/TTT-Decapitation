@@ -49,6 +49,7 @@ end
 
 -- Player Headshots
 local function PlayerDeath( Ply, Inflictor, Attacker )
+	if GAMEMODE_NAME ~= "terrortown" then return end
     if !IsValid( Ply.server_ragdoll ) then return end
 	if !Ply.was_headshot then return end
 	if !IsValid(Attacker) || !Attacker:IsPlayer() then return end
@@ -64,14 +65,21 @@ local function PlayerDeath( Ply, Inflictor, Attacker )
 end
 hook.Add('PlayerDeath', 'HeadshotDecap.PlayerDeath', PlayerDeath)
 
-hook.Add( "ScalePlayerDamage", "HeadshotDecap.SetDeathGroup", function( ply, hit_group, dmg_info )
-	ply.DeathGroup = hit_group;
+hook.Remove("DoPlayerDeath", "FWKZT.SandboxHeadshot.DoPlayerDeath")
+hook.Add("DoPlayerDeath", "FWKZT.SandboxHeadshot.DoPlayerDeath", function(pl,attacker,dmg)
+	if GAMEMODE_NAME ~= "sandbox" then return end
+	pl:SetDTBool(DT_PLAYER_HEADSHOT_BOOL, pl:LastHitGroup() == HITGROUP_HEAD)
+end)
+
+hook.Remove("ScaleNPCDamage", "FWKZT.SandboxHeadshot.ScaleNPCDamage")
+hook.Add( "ScaleNPCDamage", "FWKZT.SandboxHeadshot.ScaleNPCDamage", function( npc, hitgroup, dmginfo )
+	if GAMEMODE_NAME ~= "sandbox" then return end
+	npc.LastHitGroup = hitgroup
+	npc:SetDTBool(DT_NPC_HEADSHOT_BOOL, hitgroup == HITGROUP_HEAD)
 end )
 
-hook.Add( "PlayerSpawn", "HeadshotDecap.ResetDeathGroup", function( ply )
-	ply.DeathGroup = nil
-end )
-
-hook.Add( "DoPlayerDeath", "HeadshotDecap.GetHeadShot", function( ply, attacker, dmg_info )
-	ply.DeathGroup = nil
-end )
+hook.Remove("OnNPCKilled", "FWKZT.SandboxHeadshot.OnNPCKilled")
+hook.Add("OnNPCKilled", "FWKZT.SandboxHeadshot.OnNPCKilled", function(npc, attacker, inf)
+	if GAMEMODE_NAME ~= "sandbox" then return end
+	npc:SetDTBool(DT_NPC_HEADSHOT_BOOL, npc.LastHitGroup == HITGROUP_HEAD)
+end)
