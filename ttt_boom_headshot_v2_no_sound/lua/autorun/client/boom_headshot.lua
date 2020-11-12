@@ -15,7 +15,7 @@ hook.Remove( "CreateClientsideRagdoll", "FWKZT.Headshot.CreateCRagdolls" )
 hook.Add( "CreateClientsideRagdoll", "FWKZT.Headshot.CreateCRagdolls", function( entity, ragdoll )
 	if GAMEMODE_NAME ~= "sandbox" then return end
 	
-	if entity:WasHeadshotDeath() then
+	if entity.WasHeadshotDeath and entity:WasHeadshotDeath() then
 		local Head = ragdoll:LookupBone('valvebiped.bip01_head1')
 		if !Head then return end
 		local Pos = ragdoll:GetBonePosition( Head )
