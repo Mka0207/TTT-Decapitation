@@ -12,13 +12,24 @@ if SERVER then
 	resource.AddFile( 'materials/fwkzt/sprite_bloodspray8.vmt' )
 end
 
+local function getBoneDescendants(ent, bone, tbl)
+	tbl = tbl or {}
+	table.insert(tbl, bone)
+	for _, v in pairs(ent:GetChildBones(bone)) do
+		getBoneDescendants(ent, v, tbl)
+	end
+	return tbl
+end
+
 local function NoTTTGib( Ply )
 
 	local Head = Ply:LookupBone('valvebiped.bip01_head1')
 	if !Head then return end
 	local Pos = Ply:GetBonePosition( Head )
 
-	Ply:ManipulateBoneScale(Head, vector_origin)
+	for _, v in pairs(getBoneDescendants(Ply, Head)) do
+		Ply:ManipulateBoneScale(v, Vector(0,0,0) )
+	end
 	
 	local ED = EffectData()
 		ED:SetEntity( Ply )
@@ -37,7 +48,10 @@ local function gibPlayerHead( Ply, Normal )
 
 	local RagHead = Ply.server_ragdoll:LookupBone('valvebiped.bip01_head1')
 	if !RagHead then return end
-	Ply.server_ragdoll:ManipulateBoneScale(RagHead, Vector(0,0,0) )
+
+	for _, v in pairs(getBoneDescendants(Ply.server_ragdoll, RagHead)) do
+		Ply.server_ragdoll:ManipulateBoneScale(v, Vector(0,0,0) )
+	end
 	
 	local ED = EffectData()
 		ED:SetEntity( Ply )
